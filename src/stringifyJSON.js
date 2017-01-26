@@ -7,10 +7,16 @@ var stringifyJSON = function(obj) {
   // your code goes here
 var string = '';
 
-if (typeof obj === 'boolean' || typeof obj === 'number' || obj === undefined || obj === null) {
+if (typeof obj === 'boolean' || typeof obj === 'number' || obj === null) {
   return string + obj;
 } else if (typeof obj === 'string') {
   return '"' + obj + '"';
+} else if (Array.isArray(obj)) {
+  var arrayValues = [];
+  for (var i = 0; i < obj.length; i++) {
+    arrayValues.push(stringifyJSON(i));
+  }
+  return '[' + arrayValues + ']';
 }
 
 };
