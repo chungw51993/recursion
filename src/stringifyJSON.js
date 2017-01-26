@@ -13,8 +13,12 @@ if (typeof obj === 'boolean' || typeof obj === 'number' || obj === null) {
   return '"' + obj + '"';
 } else if (Array.isArray(obj)) {
   var arrayValues = [];
-  for (var i = 0; i < obj.length; i++) {
-    arrayValues.push(stringifyJSON(i));
+  if (obj[0] === undefined) {
+    return '[]';
+  } else {
+    for (var i = 0; i < obj.length; i++) {
+      arrayValues.push(stringifyJSON(i));
+    }
   }
   return '[' + arrayValues + ']';
 }
