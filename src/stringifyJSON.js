@@ -27,16 +27,16 @@ if (typeof obj === 'boolean' || typeof obj === 'number' || obj === null) {
 } else if (typeof obj === 'object') {
   var objectArray = [];
   for (var prop in obj) {
-    objectValue = obj.prop;
+    objectValue = obj[prop];
     objectProp = prop;
     if (typeof objectValue === 'boolean' || typeof objectValue === 'number' || objectValue === null) {
-      objectArray.push('"' + objectProp + '"' + objectValue);
+      objectArray.push('"' + objectProp + '"' + ':' + objectValue);
     } else if (typeof objectValue === 'string') {
-      objectArray.push('"' + objectProp + '"' + '"' + objectValue + '"');
+      objectArray.push('"' + objectProp + '"' + ':' + '"' + objectValue + '"');
     } else if (typeof objectValue === undefined || typeof objectValue === 'function') {
       objectArray.push('');
     } else if (typeof objectValue === 'object') {
-      objectArray.push('"' + objectProp + '"' + stringifyJSON(objectValue));
+      objectArray.push('"' + objectProp + '"' + ':' + stringifyJSON(objectValue));
     }
   }
   return '{' + objectArray + '}';
