@@ -21,6 +21,22 @@ if (typeof obj === 'boolean' || typeof obj === 'number' || obj === null) {
     }
   }
   return '[' + arrayValues + ']';
+} else if (typeof obj === 'object') {
+  var arrayValues = [];
+  for (var prop in obj) {
+    var objectValue = obj[prop];
+    var objectProp = prop;
+    if (typeof objectValue === 'boolean' || typeof objectValue === 'number' || objectValue === null) {
+      arrayValues.push('"' + objectProp + '"' + objectValue);
+    } else if (typeof objectValue === 'string') {
+      arrayValues.push('"' + objectProp + '"' + '"' + objectValue + '"');
+    } else if (typeof objectValue === undefined) {
+      arrayValues.push('');
+    } else if (typeof objectValue === 'object') {
+      arrayValues.push('"' + objectProp + '"' + stringifyJSON(objectValue));
+    }
+  }
+  return '{' + arrayValues + '}';
 }
 
 };
