@@ -6,37 +6,40 @@
 var stringifyJSON = function(obj) {
   // your code goes here
 var string = '';
+var arrayValues = [];
+var objectValues = [];
+var objectProp;
+var objectValue;
 
 if (typeof obj === 'boolean' || typeof obj === 'number' || obj === null) {
   return string + obj;
 } else if (typeof obj === 'string') {
   return '"' + obj + '"';
 } else if (Array.isArray(obj)) {
-  var arrayValues = [];
   if (obj[0] === undefined) {
     return '[]';
   } else {
     for (var i = 0; i < obj.length; i++) {
-      arrayValues.push(stringifyJSON(i));
+      arrayValues.push(stringifyJSON(obj[i]));
     }
   }
   return '[' + arrayValues + ']';
 } else if (typeof obj === 'object') {
-  var arrayValues = [];
+  var objectArray = [];
   for (var prop in obj) {
-    var objectValue = obj[prop];
-    var objectProp = prop;
+    objectValue = obj.prop;
+    objectProp = prop;
     if (typeof objectValue === 'boolean' || typeof objectValue === 'number' || objectValue === null) {
-      arrayValues.push('"' + objectProp + '"' + objectValue);
+      objectArray.push('"' + objectProp + '"' + objectValue);
     } else if (typeof objectValue === 'string') {
-      arrayValues.push('"' + objectProp + '"' + '"' + objectValue + '"');
-    } else if (typeof objectValue === undefined) {
-      arrayValues.push('');
+      objectArray.push('"' + objectProp + '"' + '"' + objectValue + '"');
+    } else if (typeof objectValue === undefined || typeof objectValue === 'function') {
+      objectArray.push('');
     } else if (typeof objectValue === 'object') {
-      arrayValues.push('"' + objectProp + '"' + stringifyJSON(objectValue));
+      objectArray.push('"' + objectProp + '"' + stringifyJSON(objectValue));
     }
   }
-  return '{' + arrayValues + '}';
+  return '{' + objectArray + '}';
 }
 
 };
