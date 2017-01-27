@@ -35,4 +35,21 @@ var parseJSON = function(json) {
       break;
     }
   }
+
+  var nully = function() {
+    var nully = '';
+    if (nextIndex === 'n') {
+      for (var i = 0; i <= 4; i++) {
+        nully += nextIndex;
+        nextChar();
+      }
+      if (nully === 'null') {
+        return null;
+      } else {
+        error('bad null');
+      }
+    }
+
+    error('bad null');
+  }
 };
