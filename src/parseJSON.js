@@ -12,4 +12,27 @@ var parseJSON = function(json) {
     nextIndex = json.charAt(currentIndex);
     return nextIndex;
   }
+
+  var value = function() {
+    switch(nextIndex) {
+      case '{':
+        return object();
+      case '[':
+        return array();
+      case '\"':
+        return string();
+      case 't':
+      case 'f':
+        return boolean();
+      case 'n':
+        return nully();
+      default:
+        if(nextIndex === '-' || (nextIndex && nextIndex >= 0 && nextIndex <= 9)) {
+          return number();
+        } else {
+          error('bad JSON');
+        }
+      break;
+    }
+  }
 };
