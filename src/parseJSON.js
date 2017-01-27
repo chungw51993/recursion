@@ -155,4 +155,24 @@ var parseJSON = function(json) {
     }
     error('bad string');
   };
+
+  var array = function() {
+    var array = [];
+    if (nextIndex !== '[') error('array should start with [');
+    if (nextChar() === ']') {
+      return array;
+    }
+
+    do {
+      array.push(value());
+      if (nextIndex === ']') {
+        nextChar;
+        return array;
+      }
+    } while (nextIndex && nextIndex === ',' && nextChar());
+
+    error('bad array');
+  };
+
+
 };
