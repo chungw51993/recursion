@@ -52,4 +52,31 @@ var parseJSON = function(json) {
 
     error('bad null');
   }
+
+  var boolean = function() {
+    var bool = '';
+    if (nextIndex === 't') {
+      _.times(4, function() {
+        bool += nextIndex;
+        nextChar();
+      });
+      if (bool === 'true') {
+        return true;
+      } else {
+        error('bad bool');
+      }
+    } else if (nextIndex === 'f') {
+      _.times(5, function() {
+        bool += nextIndex;
+        nextChar();
+      });
+      if (bool === 'false') {
+        return false;
+      } else {
+        error('bad bool');
+      }
+    }
+
+    error('bad bool');
+  }
 };
