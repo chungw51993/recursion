@@ -119,4 +119,40 @@ var parseJSON = function(json) {
     }
   };
 
+  var escapes = {
+    'b': '\b',
+    'n': '\n',
+    't': '\t',
+    'r': '\r',
+    'f': '\f',
+    '\"': '\"',
+    '\\': '\\'
+  };
+
+  var string = function() {
+    var string = '';
+    if (nextIndex !== '\"') {
+      error('string should start with \"');
+    }
+    nextChar();
+    while(nextIndex) {
+      if (nextIndex === '\"') {
+        nextChar();
+        return string;
+      }
+
+      if (nextIndex === '\\') {
+        nextChar();
+        if (escapes.hasOwnProperty(nextIndex)) {
+          string += escapes[nextIndex];
+        } else {
+          string += nextIndex;
+        }
+      } else {
+        string += nextIndex;
+      }
+      nextChar();
+    }
+    error('bad string');
+  };
 };
