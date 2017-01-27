@@ -11,7 +11,7 @@ var parseJSON = function(json) {
     currentIndex +=;
     nextIndex = json.charAt(currentIndex);
     return nextIndex;
-  }
+  };
 
   var value = function() {
     switch(nextIndex) {
@@ -34,7 +34,7 @@ var parseJSON = function(json) {
         }
       break;
     }
-  }
+  };
 
   var nully = function() {
     var nully = '';
@@ -51,7 +51,7 @@ var parseJSON = function(json) {
     }
 
     error('bad null');
-  }
+  };
 
   var boolean = function() {
     var bool = '';
@@ -78,5 +78,45 @@ var parseJSON = function(json) {
     }
 
     error('bad bool');
-  }
+  };
+
+  var number = function() {
+    var number = '';
+    function getDigits() {
+      while (nextIndex && nextIndex >= 0 && nextIndex <= 9) {
+        number += nextIndex;
+        nextChar();
+      }
+    }
+
+    if (nextIndex === '-') {
+      number += nextIndex;
+      nextChar();
+    }
+
+    getDigits();
+
+    if (nextIndex === '.') {
+      number += nextIndex;
+      nextChar();
+      getDigits();
+    }
+
+    if (nextIndex === 'e' || nextIndex === 'E') {
+      number += nextIndex;
+      nextChar();
+      if(nextIndex === '-' || nextIndex === '+') {
+        number +=nextIndex;
+        nextChar();
+      }
+      getDigits();
+    }
+
+    if (!isNaN(Number(number))) {
+      return Number(number);
+    } else {
+      error('bad number');
+    }
+  };
+
 };
